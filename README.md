@@ -69,7 +69,7 @@ This tutorial will require recent installations of
 - [matplotlib](http://matplotlib.org)
 - [pillow](https://python-pillow.org)
 - [pandas](http://pandas.pydata.org)
-- [scikit-learn](http://scikit-learn.org/stable/) (>=0.21.1)
+- [scikit-learn](http://scikit-learn.org/stable/) (>=0.22.1)
 - [IPython](http://ipython.readthedocs.org/en/stable/)
 - [Jupyter Notebook](http://jupyter.org)
 
