@@ -164,45 +164,32 @@ have frequency features instead of count features, you can
 use the L1 normalizer.
 
 ---
-class: spacious
+class: center, middle
 
-# Sparse Data
-
-- Data with many zeros – only store non-zero entries.
-- Subtracting anything will make the data “dense” (no more zeros) and blow the RAM.
-- Only scale, don’t center (use MaxAbsScaler)
+.center[
+![:scale 100%](images/no_separate_scaling.png)
+]
 
 ???
 
-There’s another one that's important for sparse data. It’s
-called the MaxAbsScaler in scikit-learn. So sparse data is
-the kind of data that happens actually quite frequently in
-practice where most of the features are zero most of the
-time. So if you have tens of thousands of features, but
-they're always nearly zero. For example, you can think about
-these being particular user actions and at any time, any
-user makes only very few actions. But there are many, many
-possibilities. So if you have data like that, you only want
-to store the non-zero values, you don't want to store all
-the zeros. If you would store all the zeros, the data
-wouldn't even fit into the RAM often. So you have this very
-large sparse data set and you want to scale it, but if you
-subtract anything from it, if you want to make it zero mean
-then all the entries will be non-zero because the chance
-that the mean is actually zero is small. So then if you
-subtract something from everything, you're going to move all
-those zeros away from zero and then you can't store the data
-in sparse format and your RAM will blow up. Basically, you
-can subtract anything from sparse matrix because that won't
-be sparse anymore. But we can still scale it because any
-number of times zero is still zero. So if we scale it, then
-it will have the same structure again. The MaxAbsScaler sets
-the maximum absolute values to one. Basically, it looks at
-the maximum absolute values in the whole dataset, or for
-each feature and makes sure that this is one, just by
-scaling by one divided by the maximum absolute value.
+Here’s an illustration why this is important using the
+min-max scaler. Left is the original data. Center is what
+happens when we fit on the training set and then transform
+the training and test set using this transformer. The data
+looks exactly the same, but the ticks changed. Now the data
+has a minimum of zero and a maximum of one on the training
+set. That’s not true for the test set, though. No particular
+range is ensured for the test-set. It could even be outside
+of 0 and 1. But the transformation is consistent with the
+transformation on the training set, so the data looks the
+same.
 
-
+On the right you see what happens when you use the test-set
+minimum and maximum for scaling the test set. That’s what
+would happen if you’d fit again on the test set. Now the
+test set also has minimum at 0 and maximum at 1, but the
+data is totally distorted from what it was before. So don’t
+do that.
 ---
 # Standard Scaler Example
 
@@ -241,65 +228,6 @@ We fit on the training set and apply transform on both the
 training and the test set. That means the training set mean
 gets subtracted from the test set, not the test-set mean.
 That’s quite important.
----
-
-class: center, middle
-
-.center[
-![:scale 100%](images/no_separate_scaling.png)
-]
-
-???
-
-Here’s an illustration why this is important using the
-min-max scaler. Left is the original data. Center is what
-happens when we fit on the training set and then transform
-the training and test set using this transformer. The data
-looks exactly the same, but the ticks changed. Now the data
-has a minimum of zero and a maximum of one on the training
-set. That’s not true for the test set, though. No particular
-range is ensured for the test-set. It could even be outside
-of 0 and 1. But the transformation is consistent with the
-transformation on the training set, so the data looks the
-same.
-
-On the right you see what happens when you use the test-set
-minimum and maximum for scaling the test set. That’s what
-would happen if you’d fit again on the test set. Now the
-test set also has minimum at 0 and maximum at 1, but the
-data is totally distorted from what it was before. So don’t
-do that.
----
-class: center, middle
-
-# Sckit-Learn API Summary
-
-![:scale 90%](images/api-table.png)
-
-
-???
-
-Here’s a summary of the scikit-learn methods. All models
-have a fit method which takes the training data X_train. If
-the model is supervised, such as our classification and
-regression models, they also take a y_train parameter. The
-scalers don’t use a y_train because they don’t use the
-labels at all – you could say they are unsupervised methods,
-but arguably they are not really learning methods at all.
-Models (also known as estimators in scikit-learn) to make a
-prediction of a target variable, you use the predict method,
-as in classification and regression. If you want to create a
-new representation of the data, a new kind of X, then you
-use the transform method, as we did with scaling. The
-transform method is also used for preprocessing, feature
-extraction and feature selection, which we’ll see later. All
-of these change X into some new form. There’s two important
-shortcuts. To fit an estimator and immediately transform the
-training data, you can use fit_transform. That’s often more
-efficient then using first fit and then transform. The same
-goes for fit_predict.
-
-
 ---
 class: smaller, compact
 
@@ -369,6 +297,35 @@ by the TAX feature.
 However, there is a bit of a problem with the analysis we
 did here. Can you see it?
 
+---
+class: center, middle
+
+# Sckit-Learn API Summary
+
+![:scale 90%](images/api-table.png)
+
+
+???
+
+Here’s a summary of the scikit-learn methods. All models
+have a fit method which takes the training data X_train. If
+the model is supervised, such as our classification and
+regression models, they also take a y_train parameter. The
+scalers don’t use a y_train because they don’t use the
+labels at all – you could say they are unsupervised methods,
+but arguably they are not really learning methods at all.
+Models (also known as estimators in scikit-learn) to make a
+prediction of a target variable, you use the predict method,
+as in classification and regression. If you want to create a
+new representation of the data, a new kind of X, then you
+use the transform method, as we did with scaling. The
+transform method is also used for preprocessing, feature
+extraction and feature selection, which we’ll see later. All
+of these change X into some new form. There’s two important
+shortcuts. To fit an estimator and immediately transform the
+training data, you can use fit_transform. That’s often more
+efficient then using first fit and then transform. The same
+goes for fit_predict.
 
 
 ---
@@ -944,86 +901,6 @@ class: center, middle
 ???
 N/A
 
----
-class: center, middle
-# Dealing with missing values
-
----
-class: spacious
-
-# Dealing with missing values
-
-- Missing values can be encoded in many ways
-- Numpy has no standard format for it (often np.NaN) - pandas does
-- Sometimes: 999, ???, ?, np.inf, “N/A”, “Unknown“ …
-- Not discussing “missing output” - that’s semi-supervised learning.
-- Often missingness is informative!
-
-???
-
-- Add feature that encodes that data was missing!
----
-
-.center[
-![:scale 80%](images/row_nan_col_nan.png)
-]
-
-???
-- Problem : Prediction not for all samples !
-- Accuracy might be biased
-
-
----
-
-.center[
-![:scale 100%](images/imputation-schema.png)
-]
-
-???
-
----
-class: spacious
-
-# Imputation Methods
-
-- Mean / Median
-- kNN
-- Regression models
-- Probabilistic models
-
-???
-
----
-
-# Mean and Median Imputation
-
-.center[
-![:scale 100%](images/imputation-median-schema.png)
-]
-
-???
-
----
-
-.center[
-![:scale 90%](images/median_imputation.png)
-]
-
-???
-
-
----
-
-
-class: compact
-
-# KNN Imputation
-- Find k nearest neighbors that have non-missing values.
-- Fill in all missing values using the average of the
-neighbors.
-.center[
-![:scale 65%](images/knn_imputation.png)
-]
 
     </textarea>
     <script src="remark-latest.min.js"></script>
