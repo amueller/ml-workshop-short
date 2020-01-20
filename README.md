@@ -12,6 +12,15 @@ Instructor
 This repository will contain the teaching material and other info associated
 with the "Introduction to Machine Learning with scikit-learn" course.
 
+Content
+-------
+- [What is machine learning and what can it do for you?](https://amueller.github.io/ml-workshop-short/slides/01-introduction.html)
+- [Data loading and basic API of scikit-learn](https://amueller.github.io/ml-workshop-short/slides/02-supervised-learning)
+- [Fundamentals of Data Preprocessing: scaling and categorical data](https://amueller.github.io/ml-workshop-short/slides/03-preprocessing)
+- [Grid search and cross-validation](https://amueller.github.io/ml-workshop-short/slides/04-cross-validation-grid-search.html)
+- [Building workflows with Pipelines](https://amueller.github.io/ml-workshop-short/slides/05-pipelines.html)
+- [Evaluation metrics for classification](https://amueller.github.io/ml-workshop-short/slides/06-model-evaluation.html)
+
 About the workshop
 ------------------
 Machine learning has become an indispensable tool across many areas of research
