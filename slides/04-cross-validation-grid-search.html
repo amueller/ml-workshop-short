@@ -54,8 +54,8 @@ con: high variance, bad use of data
 
 ---
 # Decrease Variance: Cross-validation
-.padding-top[
-![:scale 100%](images/kfold_cv.png)]
+<br />
+.center[![:scale 85%](images/cross_validation_new.png)]
 ???
 The answer is of course cross-validation. In cross-validation, you split
 your data into multiple folds, usually 5 or 10, and built multiple models.
@@ -71,8 +71,6 @@ Takes 5 or 10 times longer!
 Better data use (larger training sets).
 Does that solve all problems? No, it replaces only one of the splits,
 usually the inner one!
---
-<br \>
 
 pro: more stable, more data
 
@@ -85,7 +83,7 @@ con: slower
 class: center, some-space
 # Cross-validation + test set
 
-![:scale 70%](images/grid_search_cross_validation.png)
+![:scale 100%](images/grid_search_cross_validation_new.png)
 
 ???
 Here is how the workflow looks like when we are using five-fold
