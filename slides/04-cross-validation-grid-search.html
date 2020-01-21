@@ -27,11 +27,14 @@ Columbia University, scikit-learn
 .smallest[https://github.com/amueller/ml-workshop-short]
 
 ---
+# So far: train-test split
 
-# Threefold split
-.padding-top[
-![:scale 100%](images/threefold_split.png)
-]
+![:scale 100%](images/train_test_split_new.png)
+???
+---
+
+# Better: Threefold split
+![:scale 100%](images/train_test_validation_split.png)
 ???
 The simplest way to combat this overfitting to the test set is by using
 a three-fold split of the data, into a training, a validation and a
@@ -44,15 +47,13 @@ hypothesis testing error!
 
 What are downsides of this? We lose a lot of data for evaluation, and
 the results depend on the particular sampling.
---
-<br />
 
 pro: fast, simple
 
 con: high variance, bad use of data
 
 ---
-# Cross-validation
+# Decrease Variance: Cross-validation
 .padding-top[
 ![:scale 100%](images/kfold_cv.png)]
 ???
