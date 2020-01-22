@@ -2,7 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import numpy as np
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, StandardScaler
+from sklearn.compose import make_column_transformer
 # We use display so that we can do multiple nice renderings of dataframes
 # in Jupyter
 from IPython.display import display
@@ -48,7 +49,7 @@ X_test_scaled = scaler.transform(X_test)
 
 # using OneHotEncoder
 cont_features = data_features.dtypes == "int64"
-ct = make_column_transformer((OneHotEncoder(), ~cont_features),
+ct = make_column_transformer((OneHotEncoder(handle_unknown='ignore'), ~cont_features),
                              (StandardScaler(), cont_features))
 X_train, X_test, y_train, y_test = train_test_split(data_features, income)
 X_train_scaled = ct.fit_transform(X_train)
